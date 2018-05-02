@@ -3,52 +3,52 @@ from collections import defaultdict
 # Dato il grafo e la radice restituisce la tabella di routing
 # per la radice
 def dijkstra(nodi,archi,radice):
-    raggiunti = {radice: ("",0,"")}
-    next_hop = {}
+  raggiunti = {radice: ("",0,"")}
+  next_hop = {}
     
-    # Alla funzione vengono passati il grafo della rete, definito
-    # dall'insieme "nodi" e dall'insieme "archi", che sono coppie 
-    # di nodi collegati da un link. La radice dell'albero (cioe'
-    # il nodo che esegue l'algoritmo) e' nel parametro "radice".
-    #
-    # L'algoritmo svuota progressivamente l'insieme dei "nodi" aggiungendo
-	# quelli che rimuove al dizionario "raggiunti" e calcolandone la
-	# distanza. Il dizionario "raggiunti" e' la tabella di routing,
-	# e associa alla destinazione una tripla (ultimo hop, distanza,
-	# primo hop), e viene aggiornato con il risultato dell'algoritmo.
-	# Il primo elemento della tupla, l'ultimo hop, e' funzionale
-	# all'algoritmo, ma non e' rilevante ai fini del routing.
+# Alla funzione vengono passati il grafo della rete, definito
+# dall'insieme "nodi" e dall'insieme "archi", che sono coppie 
+# di nodi collegati da un link. La radice dell'albero (cioe'
+# il nodo che esegue l'algoritmo) e' nel parametro "radice".
+#
+# L'algoritmo svuota progressivamente l'insieme dei "nodi" aggiungendo
+# quelli che rimuove al dizionario "raggiunti" e calcolandone la
+# distanza. Il dizionario "raggiunti" e' la tabella di routing,
+# e associa alla destinazione una tripla (ultimo hop, distanza,
+# primo hop), e viene aggiornato con il risultato dell'algoritmo.
+# Il primo elemento della tupla, l'ultimo hop, e' funzionale
+# all'algoritmo, ma non e' rilevante ai fini del routing.
     
-    while nodi:      # Si arresta quando l'insieme "nodi" e' vuoto 
-    # PREPARAZIONE
-        # Trovo nodo con distanza minima tra quelli raggiunti
-        nodo_min = None
-        for nodo in nodi:
-            if nodo in raggiunti:
-                if nodo_min is None: nodo_min = nodo
-                elif raggiunti[nodo][1] < raggiunti[nodo_min][1]: nodo_min = nodo
-        if nodo_min is None: break
-        print("Elimino "+nodo_min, nodi)
-        nodi.remove(nodo_min)
-        distanza_min = raggiunti[nodo_min][1]
-        # Calcolo mappa archi uscenti da min -> distanza da min
-        distanze_da_min=defaultdict(list)
-        for arco in archi.keys():
-            if arco[0] == nodo_min: distanze_da_min[arco[1]]=archi[arco]
-            if arco[1] == nodo_min: distanze_da_min[arco[0]]=archi[arco]
-        print(distanze_da_min)
-        print(raggiunti)
-        #Algoritmo di Dijkstra
-        for destinazione in distanze_da_min.keys():
-            # Calcolo la distanza della destinazione passando da nodo_min
-			nuova_distanza = distanza_min + distanze_da_min[destinazione]
-            # Se migliore della precedente sostituisco distanza e prossimo
-			if destinazione not in raggiunti or nuova_distanza < raggiunti[destinazione][1]:
-				if raggiunti[nodo_min][2] == "":
-					raggiunti[destinazione] = (nodo_min, nuova_distanza, destinazione)
-				else:
-					raggiunti[destinazione] = (nodo_min, nuova_distanza, raggiunti[nodo_min][2])
-    return raggiunti
+  while nodi:      # Si arresta quando l'insieme "nodi" e' vuoto 
+# PREPARAZIONE
+# Trovo nodo con distanza minima tra quelli raggiunti
+      nodo_min = None
+      for nodo in nodi:
+        if nodo in raggiunti:
+          if nodo_min is None: nodo_min = nodo
+          elif raggiunti[nodo][1] < raggiunti[nodo_min][1]: nodo_min = nodo
+      if nodo_min is None: break
+      print("Elimino "+nodo_min, nodi)
+      nodi.remove(nodo_min)
+      distanza_min = raggiunti[nodo_min][1]
+# Calcolo mappa archi uscenti da min -> distanza da min
+      distanze_da_min=defaultdict(list)
+      for arco in archi.keys():
+        if arco[0] == nodo_min: distanze_da_min[arco[1]]=archi[arco]
+        if arco[1] == nodo_min: distanze_da_min[arco[0]]=archi[arco]
+      print(distanze_da_min)
+      print(raggiunti)
+#ALGORITMO di Dijkstra
+      for destinazione in distanze_da_min.keys():
+# Calcolo la distanza della destinazione passando da nodo_min
+        nuova_distanza = distanza_min + distanze_da_min[destinazione]
+# Se migliore della precedente sostituisco distanza e prossimo
+        if destinazione not in raggiunti or nuova_distanza < raggiunti[destinazione][1]:
+          if raggiunti[nodo_min][2] == "":
+            raggiunti[destinazione] = (nodo_min, nuova_distanza, destinazione)
+          else:
+            raggiunti[destinazione] = (nodo_min, nuova_distanza, raggiunti[nodo_min][2])
+  return raggiunti
 
 # 4 nodi: provare a disegnare la rete
 #l = dijkstra(
