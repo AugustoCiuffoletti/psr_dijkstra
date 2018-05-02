@@ -61,6 +61,9 @@ def dijkstra(nodi,archi,radice):
 #print(l)
 
 
+# Questo grafo e' tratto dalla pagina di wikipedia, arricchito con
+# un ulteriore nodo '7' raggiungibile solo da nodi non adiacenti alla 
+# radice
 l = dijkstra(
 set(['1','2','3','4', '5', '6', '7']),
 {('1','2'):7,
